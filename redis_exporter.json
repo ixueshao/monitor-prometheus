@@ -1,0 +1,47 @@
+[
+  {
+    "targets": [ "192.168.64.84:9121"],
+    "labels": {
+      "env": "QA",
+      "job": "redis_exporter-68",
+      "realip": "192.168.64.68",
+      "port": "6379"
+    }
+  },
+  {
+    "targets": [ "192.168.64.84:9122"],
+    "labels": {
+      "env": "QA",
+      "job": "redis_exporter-65",
+      "realip": "192.168.64.65",
+      "port": "6379"
+    }
+  },
+  {
+    "targets": [ "192.168.64.84:9123"],
+    "labels": {
+      "env": "QA",
+      "job": "redis_exporter-sentinel1",
+      "realip": "192.168.64.68",
+      "port": "26379"
+    }
+  },
+  {
+    "targets": [ "192.168.64.84:9124"],
+    "labels": {
+      "env": "QA",
+      "job": "redis_exporter-sentinel2",
+      "realip": "192.168.64.68",
+      "port": "26380"
+    }
+  },
+  {
+    "targets": [ "192.168.64.84:9125"],
+    "labels": {
+      "env": "QA",
+      "job": "redis_exporter-sentinel3",
+      "realip": "192.168.64.68",
+      "port": "26381"
+    }
+  }
+]

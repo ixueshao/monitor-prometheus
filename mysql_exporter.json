@@ -1,0 +1,20 @@
+[
+  {
+    "targets": [ "192.168.64.84:10000"],
+    "labels": {
+      "env": "QA",
+      "job": "mysql_exporter",
+      "realip":"192.168.64.66",
+      "port":"3306"
+    }
+  },
+  {
+    "targets": [ "192.168.64.84:10001"],
+    "labels": {
+      "env": "QA",
+      "job": "mysql_exporter",
+      "realip":"192.168.64.66",
+      "port":"33306"
+    }
+  }
+]

@@ -1,0 +1,115 @@
+groups:
+- name: RabbitMQ集群监控
+  rules:
+  - alert: RabbitmqDown
+    expr: rabbitmq_up == 0
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Rabbitmq down (instance {{ $labels.realip }})"
+      description: "RabbitMQ node down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: ClusterDown
+    expr: rabbitmq_running < 1
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Cluster down (instance {{ $labels.realip }})"
+      description: "Less than 2 nodes running in RabbitMQ cluster\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: ClusterPartition
+    expr: rabbitmq_partitions > 0
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Cluster partition (instance {{ $labels.realip }})"
+      description: "Cluster partition\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: OutOfMemory
+    expr: rabbitmq_node_mem_used / rabbitmq_node_mem_limit * 100 > 90
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Out of memory (instance {{ $labels.realip }})"
+      description: "Memory available for RabbmitMQ is low (< 10%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: TooManyConnections
+    expr: rabbitmq_connections > 1000
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Too many connections (instance {{ $labels.realip }})"
+      description: "RabbitMQ instance has too many connections (> 1000)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: DeadLetterQueueFillingUp
+    expr: rabbitmq_queue_messages{queue="dead-letter-queue"} > 10
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Dead letter queue filling up (instance {{ $labels.realip }})"
+      description: "Dead letter queue is filling up (> 10 msgs)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+#  - alert: TooManyMessagesInQueue
+#    expr: rabbitmq_queue_messages_ready > 800
+#    for: 5m
+#    labels:
+#      severity: warning
+#    annotations:
+#      summary: "Too many messages in queue (instance {{ $labels.queue}})"
+#      description: "Queue is filling up (> 800 msgs)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: SlowQueueConsuming
+    expr: time() - rabbitmq_queue_head_message_timestamp{queue="my-queue"} > 60
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Slow queue consuming (instance {{ $labels.realip }})"
+      description: "Queue messages are consumed slowly (> 60s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+#  - alert: NoConsumer
+#    expr: rabbitmq_queue_consumers == 0
+#    for: 5m
+#    labels:
+#      severity: error
+#    annotations:
+#      summary: "No consumer (instance {{ $labels.realip }})"
+#      description: "Queue has no consumer\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: TooManyConsumers
+    expr: rabbitmq_queue_consumers > 10
+    for: 5m
+    labels:
+      severity: error
+    annotations:
+      summary: "Too many consumers (instance {{ $labels.realip }})"
+      description: "Queue should have only 1 consumer\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+#  - alert: UnactiveExchange
+#    expr: rate(rabbitmq_exchange_messages_published_in_total[1m]) < 5
+#    for: 5m
+#    labels:
+#      severity: warning
+#    annotations:
+#      summary: "Unactive exchange (instance {{ $labels.realip }})"
+#      description: "Exchange receive less than 5 msgs per second\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: RabbitMQ message unacknowledged too more
+    expr: rabbitmq_queue_messages_unacknowledged > 20
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      summary: Instance Node {{ $labels.realip }} is down
+  - alert: RabbitMQ server disk is lack.
+    expr: rabbitmq_node_disk_free_alarm == 1
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      summary: RabbitMQ Instance {{ $labels.realip }} have less free disk.

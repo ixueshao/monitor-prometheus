@@ -1,0 +1,23 @@
+[
+  {
+    "targets": [ "baidu.com:114.114.114.114"],
+    "labels": {
+      "env": "ALL",
+      "job": "114DNS"
+    }
+  },
+  {
+    "targets": [ "baidu.com:223.5.5.5"],
+    "labels": {
+      "env": "ALL",
+      "job": "阿里云DNS"
+    }
+  },
+  {
+    "targets": [ "baidu.com:119.29.29.29"],
+    "labels": {
+      "env": "ALL",
+      "job": "腾讯DNS-dnspod"
+    }
+  }
+]
