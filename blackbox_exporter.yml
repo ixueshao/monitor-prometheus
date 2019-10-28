@@ -9,6 +9,6 @@ modules:
     prober: dns
     timeout: 10s
     dns:
-      query_name: "xingshulin.com"
+      query_name: "baidu.com"
       query_type: "A"
       preferred_ip_protocol: "ip4"
